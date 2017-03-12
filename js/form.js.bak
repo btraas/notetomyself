@@ -1,0 +1,8 @@
+$(document).ready(function() {
+	document.f.email.focus();
+
+});
+
+
+
+

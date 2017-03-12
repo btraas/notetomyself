@@ -1,0 +1,123 @@
+
+body {
+    font: 1em Verdana, Arial, Helvetica, sans-serif;
+    background: #F5A9A9;
+    color: #000;
+    text-align: center; /* Centers the container */
+    margin-top: 10px;
+    padding: 0;
+}
+
+#wrapper {
+    width: 780px; /* 780px is just wide enough to fill and 800px screen */
+    margin: 0 auto; /* It's important to set the margin to auto if you want the layout to center */
+    background: #FFCCFF;
+   
+   /* border: 1px solid #999;*/
+	overflow:hidden;
+}
+
+#header, #footer{
+    padding: 10px;  /* This sets a 10px padding on all of our content boxes */
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+}
+
+#header {
+    background: #FFCCFF;
+    margin: 0;
+    padding: 10px;
+}
+
+
+
+
+
+
+#footer {
+    background: #FFCCFF;
+    clear: both;
+	 margin-top: 10px;
+	 width:780px;
+}
+
+
+			input.blur {
+				color: #999;
+			}
+
+
+
+
+
+
+
+
+
+.underline{
+	text-decoration:underline;
+}
+
+
+
+
+
+label, #captcha
+{
+width: 230px;
+float: left;
+text-align: right;
+margin-right: 10px;
+display: block;
+font-size:1em;
+}
+
+input
+{
+color: #781351;
+/*background: #FFCCFF;*/
+background: #FFFFFF;
+border: 1px solid #781351;
+
+}
+
+.submit input
+{
+	color: #000;
+	background: #FFCCFF ;
+	border: 2px outset #d7b9c9
+	margin-left: 10px;
+}
+
+
+fieldset
+{
+border: 1px solid #781351;
+width: 440px
+}
+
+
+#captcha{
+	border-style:solid;
+	border-width:1px;
+/*	text-align:right;
+	margin-right:10px;*/
+}
+
+legend
+{
+color: #000;
+background: #FFCCFF;
+border: 1px solid #781351;
+padding: 2px 6px
+} 
+
+#column{
+ background-color:#F5A9A9;
+ width:480px;
+ margin-left:auto;
+ margin-right:auto;
+ margin-bottom:10px;
+ padding:3%;"
+}

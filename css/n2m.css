@@ -1,0 +1,79 @@
+
+body {
+    font: 1em Verdana, Arial, Helvetica, sans-serif;
+    background: #F5A9A9;
+    color: #000;
+    text-align: center; /* Centers the container */
+    margin-top: 10px;
+    padding: 0;
+}
+
+#wrapper {
+    width: 800px; /* 780px is just wide enough to fill and 800px screen */
+    margin: 0 auto; /* It's important to set the margin to auto if you want the layout to center */
+    background: #FFCCFF;
+   
+    border: 1px solid #999;
+	overflow:hidden;
+}
+
+#header, #column1, #column2, #column3 ,#footer{
+    padding: 10px;  /* This sets a 10px padding on all of our content boxes */
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+}
+
+#header {
+    background: #FFCCFF;
+    margin: 0;
+    padding: 10px;
+}
+
+
+
+    #column1 {
+        float: left; /* Sets this column to the left inside its section */
+        background: #F2F5A9;
+        width: 240px;
+		overflow:hidden;
+		 border: 1px solid #000;
+		 margin-right: 5px; margin-bottom: -1000px; padding-bottom: 1000px;
+    }
+
+    #column2 {
+        float:left;
+        background: #F8ECE0;
+        width: 240px;
+		overflow:hidden;
+		 border: 1px solid #000;
+		 margin-right: 5px; margin-bottom: -1000px; padding-bottom: 1000px;
+    }
+
+
+
+    #column3 {
+        float: left; /* Sets this column to the left inside its section */
+        background: #E0F8E0;
+        width: 240px;
+		overflow:hidden;
+		 border: 1px solid #000;
+		 margin-right: 5px; margin-bottom: -1000px; padding-bottom: 1000px;
+    }
+
+
+
+#footer {
+    background: #FFCCFF;
+    clear: both;
+	 margin-top: 10px;
+	 width:800px;
+}
+
+
+			input.blur {
+				color: #999;
+			}
+
+
+
