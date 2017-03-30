@@ -13,16 +13,17 @@
 <body>
 
 <?php 
-print_r($_POST);
+//print_r($_POST);
 
 $e = $_POST['email'];
 $p = $_POST['passwd'];
 
-if(!login($e, $p)) { echo <<<EOF
+if(!isset($_POST['email']) || !isset($_POST['passwd'])) {
+	echo "Error logging in. Try <a href='index.php'>logging in</a> again or <a href='register2.php'>register</a> for a new account"; 
+} elseif(!login($e, $p)) { 
+	echo <<<EOF
 Login error. Did you <a href='forgotpassword.php'>forget your password</a>? Please try again to <a href="register2.php">register</a> or <a href="index.php">log in</a>.
 EOF;
-
-// <!--Error logging in. Try <a href='index.php'>logging in</a> again or <a href='register2.php'>register</a> for a new account-->
 
 }
 
