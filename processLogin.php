@@ -15,33 +15,55 @@
 <?php 
 //print_r($_POST);
 
+define("BASE_SITE", "http://note-to-myself.pricechecker.pro");
+require_once ("initdb.php");
+
+
 $e = $_POST['email'];
 $p = $_POST['passwd'];
 
 if(!isset($_POST['email']) || !isset($_POST['passwd'])) {
 	echo "Error logging in. Try <a href='index.php'>logging in</a> again or <a href='register2.php'>register</a> for a new account"; 
 } elseif(!login($e, $p)) { 
-	echo <<<EOF
-Login error. Did you <a href='forgotpassword.php'>forget your password</a>? Please try again to <a href="register2.php">register</a> or <a href="index.php">log in</a>.
-EOF;
+	die("Login error. Did you <a href='forgotpassword.php'>forget your password</a>?
+        Please try again to <a href=\"register2.php\">register</a> or <a href=\"index.php\">log in</a>.");
 
 }
 
-if(!$confirmed) {
-    echo <<<EOF
+$confirmHash = getConfirmHash($_POST['email']);
 
-You need to confirm your registration before you can log in. Check your email (a.a@aaaaa.aa). 
-Thank you for registering.
-              An email has been sent to a.a@aaaaa.aa.
-    Please confirm your registration by clicking the link in your email.
-    Then you can log in. Alternatively, you can finish signing up now.
-EOF;
+if(!empty($confirmHash)) {
+    $confirmLink = BASE_SITE . "/index.php?r=$confirmHash&e=$_POST[email]";
+    die("You need to confirm your registration before you can log in. Check your email ($e).<br>
+Thank you for registering.<br>
+              An email has been sent to <span style=\"color:red;\">$e</span><br>
+    Please confirm your registration by clicking the link in your email.<br>
+    Then you can <a href=\"index.php\">log in</a>. 
+    <span style=\"color:red;\">Alternatively, you can finish signing up <a href=\"$confirmLink\">now</a>.");
 }
 
+header('Location: notes.php');
+exit;
 
 function login($e, $p) {
 	if(empty($e) || empty($p)) return false;
-	return true;
+	//return true;
+
+
+    $user = strtolower(trim($e));
+    $conn = getConn();
+
+    if(!accountExists($user)) return false;
+
+    $result = mysqli_query($conn, "SELECT password_hash FROM users WHERE email = '$user'") or
+    die(mysqli_error($conn));
+
+    $row = $result->fetch_assoc();
+    if($row['password_hash'] != sha1($p)) return false;
+
+    session_start();
+    $_SESSION['user'] = $user;
+    return true;
 }
 
 ?>

@@ -11,7 +11,26 @@
 
 </head>
 <body>
+<?php
 
+session_start();
+if(isset($_SESSION['user'])) header('notes.php');
+
+require_once 'initdb.php';
+
+// Don't verify, just like the original. Simply activate the email address that's sent
+if(isset($_GET['r']) && isset($_GET['e'])) {
+    $user = strtolower(trim($_GET['e']));
+    $conn = getConn();
+
+    $result = mysqli_query($conn, "UPDATE users SET tmp_hash = NULL WHERE email = '$user'") or
+    die(mysqli_error($conn));
+
+    die("Thank you for confirming your registration for $user. You may now <a href=\"index.php\">log in</a>.");
+
+}
+
+echo <<<EOF
     <h1>Log in</h1>
 
 	<form action="processLogin.php" method="post" onsubmit="return isFormDataValid();">
@@ -65,3 +84,4 @@
 	</form>
 </body>
 </html>
+EOF;
