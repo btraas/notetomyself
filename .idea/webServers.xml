@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="648f86d9-77dd-4adc-97e9-3c4ed4c987bf" name="Note To Myself" url="http://note-to-myself.pricechecker.pro">
+        <fileTransfer host="pricechecker.pro" port="22" privateKey="C:\cygwin64\home\Brayd\.ssh\id_rsa" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

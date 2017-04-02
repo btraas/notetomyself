@@ -27,6 +27,18 @@ EOF;
 
 }
 
+if(!$confirmed) {
+    echo <<<EOF
+
+You need to confirm your registration before you can log in. Check your email (a.a@aaaaa.aa). 
+Thank you for registering.
+              An email has been sent to a.a@aaaaa.aa.
+    Please confirm your registration by clicking the link in your email.
+    Then you can log in. Alternatively, you can finish signing up now.
+EOF;
+}
+
+
 function login($e, $p) {
 	if(empty($e) || empty($p)) return false;
 	return true;

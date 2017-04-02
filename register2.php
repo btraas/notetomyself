@@ -4,7 +4,7 @@
 <link rel="shortcut icon" href="pencil.ico" />
 
     <title>Note to Myself - Register</title>
-    <link type="text/css" href="css/register2.css" rel="stylesheet" media="screen"></link>
+    <link type="text/css" href="css/register2.css" rel="stylesheet" media="screen" />
     <script src="js/jquery-1.4.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/register2.js"></script>
 
