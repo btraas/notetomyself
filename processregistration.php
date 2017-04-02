@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <?php
 
-define("BASE_SITE", "http://note-to-myself.pricechecker.pro");
-
 use PHPMailer\PHPMailer\PHPMailer;
 
 require_once ("initdb.php");
@@ -22,10 +20,10 @@ function createAndGetKey($user, $pw) {
     $query = mysqli_prepare($conn, "INSERT INTO users (email, password_hash, tmp_hash) 
                                       VALUES (?,?,?)");
 
-    $a = md5(time()/2);
+    $a = sha1(time()/2);
     $b = md5(time()*1.7);
-    $c = md5($user . $pw);
-    $query->bind_param('sss', $user, sha1($pw), sha1($a . $b . $c ));
+    $c = sha1($user . $pw);
+    $query->bind_param('sss', $user, sha1($pw), md5($a . $b . $c )); // note-to-myself.com uses md5
     $query->execute();
 
     $result = mysqli_query($conn, "SELECT tmp_hash FROM users WHERE email = '$user'") or

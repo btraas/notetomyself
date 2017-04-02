@@ -14,7 +14,10 @@
 <?php
 
 session_start();
-if(isset($_SESSION['user'])) header('notes.php');
+if(isset($_SESSION['user'])) {
+    header('Location: notes.php');
+    exit;
+}
 
 require_once 'initdb.php';
 

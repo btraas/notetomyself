@@ -15,7 +15,6 @@
 <?php 
 //print_r($_POST);
 
-define("BASE_SITE", "http://note-to-myself.pricechecker.pro");
 require_once ("initdb.php");
 
 
