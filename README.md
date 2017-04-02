@@ -9,6 +9,7 @@ Live at: http://note-to-myself.pricechecker.pro
 Code at: https://github.com/btraas/pricechecker-pro
 
 Tools used:
+- PHP 7.1 & Apache/2.4.18 (Ubuntu)
 - PHPStorm 2017.1
 - Composer
 - PHPMailer 6.0.0 (via Composer)
