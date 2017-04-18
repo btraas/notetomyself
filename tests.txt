@@ -1,2 +1,0 @@
-Page    |  Description| Input | Ex.Result | Result | Pass
-index     com
