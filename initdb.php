@@ -28,8 +28,9 @@ mysqli_query($db_conn, "CREATE TABLE IF NOT EXISTS users (
 
 mysqli_query($db_conn, "CREATE TABLE IF NOT EXISTS images (
 	id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	user_email VARCHAR(200) not null ,
-	link VARCHAR(200) NOT NULL,
+	user_email VARCHAR(200) not null,
+	data TEXT,
+	thumbnail TEXT,
 	FOREIGN KEY (user_email) REFERENCES users(email)
 	
 )") or	die(mysqli_error($db_conn));
@@ -87,11 +88,11 @@ function updateUserStrings($user, $data) {
 
 
     if(sizeof($vals) == 0) die('no vals to set!');
-    if(sizeof($vals == 1)) $query->bind_param($types, $vals[0]);
-    if(sizeof($vals == 2)) $query->bind_param($types, $vals[0], $vals[1]);
-    if(sizeof($vals == 3)) $query->bind_param($types, $vals[0], $vals[1], $vals[2]);
-    if(sizeof($vals == 4)) $query->bind_param($types, $vals[0], $vals[1], $vals[2], $vals[3]);
-    if(sizeof($vals == 5)) $query->bind_param($types, $vals[0], $vals[1], $vals[2], $vals[3], $vals[4]);
+    if(sizeof($vals) == 1) $query->bind_param($types, $vals[0]);
+    if(sizeof($vals) == 2) $query->bind_param($types, $vals[0], $vals[1]);
+    if(sizeof($vals) == 3) $query->bind_param($types, $vals[0], $vals[1], $vals[2]);
+    if(sizeof($vals) == 4) $query->bind_param($types, $vals[0], $vals[1], $vals[2], $vals[3]);
+    if(sizeof($vals) == 5) $query->bind_param($types, $vals[0], $vals[1], $vals[2], $vals[3], $vals[4]);
 
 
 

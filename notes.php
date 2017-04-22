@@ -35,21 +35,25 @@ if(isset($_POST['submitting'])) {
            }
        }
 
+		/*
        $target_file = $images_folder . "/" . basename($_FILES["i"]["name"]);
        if(move_uploaded_file($_FILES["i"]["tmp_name"], $target_file)) {
-           createThumb($target_file);
+           //createThumb($target_file);
            addImageGetId($user, $target_file);
        }
+	   */
+	   addImageGetId($user, $_FILES["i"]);
     }
 
-    foreach($_POST['delete'] AS $deleteImage) {
+	if(!empty($_POST['delete']))
+    foreach(@$_POST['delete'] AS $deleteImage) {
 
         $deleteImage = sanitizeInt($deleteImage);
 
-        $q1 = mysqli_query($conn, "SELECT link FROM images WHERE id = $deleteImage");
-        $image = $q1->fetch_assoc();
-        unlink($image['link']);
-        unlink(getThumbnailName($image['link']));
+        //$q1 = mysqli_query($conn, "SELECT link FROM images WHERE id = $deleteImage");
+        //$image = $q1->fetch_assoc();
+        //unlink($image['link']);
+        //unlink(getThumbnailName($image['link']));
         $q2 = mysqli_query($conn, "DELETE FROM images WHERE id = $deleteImage");
 
     }
@@ -79,17 +83,23 @@ if(!$data['uploaded']) {
 }
 
 
-function addImageGetId($user, $link) {
+function addImageGetId($user, $file) {
     $user = strtolower(trim($user));
     $conn = getConn();
 
     if(!accountExists($user)) die('User doesn\'t exist!');
 
-    $query = mysqli_prepare($conn, "INSERT INTO images (user_email, link) 
-                                      VALUES (?,?)");
+	$image = base64_encode(file_get_contents($file['tmp_name']));
+	$thumb = base64_encode(getThumb($file));
 
-    $query->bind_param('ss', $user, $link);
-    $query->execute();
+
+
+	//echo "<img src=\"data:image/jpeg;base64,".base64_encode($image)."\"/>";
+	//die();
+
+    $query = mysqli_query($conn, "INSERT INTO images (user_email, data, thumbnail) 
+                                      VALUES ('$user', '$image', '$thumb')");
+    //$query->execute();
 
     return mysqli_insert_id($conn);
 }
@@ -107,24 +117,24 @@ function getThumbnailName($img) { // {{{
 
 } // }}}
 
-function createThumb($img) {
+function getThumb($img) {
     // trim beginning ./ if exists, to be consistent.
-    $img = ltrim($img, './');
+    //$img = ltrim($img, './');
 
     // get file extension
-    $ext = pathinfo($img, PATHINFO_EXTENSION);
+    $ext = pathinfo($img['name'], PATHINFO_EXTENSION);
 
     // get the "thumbnail name" of this filename
-    $thumbname = getThumbnailName($img);
+    //$thumbname = getThumbnailName($img);
 
 
     // create image in memory from file, handle specific filetypes
     $upperExt = strtoupper($ext);
     switch($upperExt) {
         case 'JPEG' :
-        case 'JPG'  : $im = imagecreatefromjpeg($img); break;
+        case 'JPG'  : $im = imagecreatefromjpeg($img['tmp_name']); break;
 		//  case 'PNG'  : $im = imagecreatefrompng($img); break;
-        case 'GIF'  : $im = imagecreatefromgif($img); break;
+        case 'GIF'  : $im = imagecreatefromgif($img['tmp_name']); break;
         default : die("Only jpg and gif files are supported. <a href=\"notes.php\">Try again</a>.");
     }
 
@@ -157,18 +167,24 @@ function createThumb($img) {
         $newX, $newY,         imagesx($im), imagesy($im));
 
 
+	ob_start();
     // handle saving filetypes
     switch($upperExt) {
 
         case 'JPEG' :
-        case 'JPG'  : imagejpeg($th, $thumbname, 100); break;
-        case 'PNG'	: imagepng($th, $thumbname, 9); break;
-        case 'GIF'	: imagegif($th, $thumbname); break;
+        case 'JPG'  : imagejpeg($th, null, 100); break;
+        //	case 'PNG'	: imagepng($th, $thumbname, 9); break;
+        case 'GIF'	: imagegif($th, null); break;
         default : echo "fail";
     }
+	$data = ob_get_contents();
+	ob_clean();
 
     // cleanup
-    imagedestroy($im);
+    //imagedestroy($im);
+
+	return $data;
+
 }
 
 
@@ -219,14 +235,15 @@ function createThumb($img) {
                         $result = mysqli_query($conn, "SELECT * FROM images where user_email = '$user'") or die(mysqli_error($conn));
 
                         while($img = mysqli_fetch_assoc($result)) {
-                            $file = $img['link'];
-                            $base = basename($file);
-                            $thumb = getThumbnailName($file);
+                            //$file = $img['link'];
+                            //$base = basename($file);
+                            //$thumb = getThumbnailName($file);
+							$thumb = "data:image/jpeg;base64,".$img['thumbnail'];
 
-                            echo "<a href=\"$file\" target=\"_blank\">
-                                    <img src=\"$thumb\" alt=\"$base\">
-                                  </a>
-                            <input type=\"checkbox\" name=\"delete[]\" value=\"$img[id]\"> <label for=\"delete[]\">delete</label>
+                            //echo "<a href=\"$file\" target=\"_blank\">
+                             echo  "      <img src=\"$thumb\" >";
+                             //     </a>
+                            "<input type=\"checkbox\" name=\"delete[]\" value=\"$img[id]\"> <label for=\"delete[]\">delete</label>
         
                             <br><br>
                             ";
