@@ -16,7 +16,7 @@
 //print_r($_POST);
 
 require_once ("initdb.php");
-
+session_start();
 
 $e = $_POST['email'];
 $p = $_POST['passwd'];
@@ -24,6 +24,13 @@ $p = $_POST['passwd'];
 if(!isset($_POST['email']) || !isset($_POST['passwd'])) {
 	echo "Error logging in. Try <a href='index.php'>logging in</a> again or <a href='register2.php'>register</a> for a new account"; 
 } elseif(!login($e, $p)) { 
+
+	if($_SESSION['incorrect_pass'] >= 3) {
+		$_SESSION['incorrect_pass'] = 0;
+		include('processpasswordreminder.php');
+		exit();
+	}
+
 	die("Login error. Did you <a href='forgotpassword.php'>forget your password</a>?
         Please try again to <a href=\"register2.php\">register</a> or <a href=\"index.php\">log in</a>.");
 
@@ -45,6 +52,9 @@ header('Location: notes.php');
 exit;
 
 function login($e, $p) {
+	if(empty($_SESSION['incorrect_pass'])) $_SESSION['incorrect_pass'] = 0;
+	$_SESSION['incorrect_pass']++;
+
 	if(empty($e) || empty($p)) return false;
 	//return true;
 
@@ -62,6 +72,7 @@ function login($e, $p) {
 
     session_start();
     $_SESSION['user'] = $user;
+	$_SESSION['incorrect_pass'] = 0;
     return true;
 }
 
