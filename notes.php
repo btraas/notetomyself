@@ -25,6 +25,8 @@ if(isset($_POST['submitting'])) {
 
 
     if(!empty($_FILES['i'])) {
+
+		/*
        $images_folder = "uploadedimages/$user";
 
        if (!file_exists($images_folder)) {
@@ -34,6 +36,7 @@ if(isset($_POST['submitting'])) {
                echo $error['message'];
            }
        }
+		*/
 
 		/*
        $target_file = $images_folder . "/" . basename($_FILES["i"]["name"]);
@@ -96,6 +99,11 @@ function addImageGetId($user, $file) {
 
 	//echo "<img src=\"data:image/jpeg;base64,".base64_encode($image)."\"/>";
 	//die();
+
+	$q1 = mysqli_query($conn, "SELECT count(*) AS num FROM images WHERE user_email = '$user'");
+	$object = mysqli_fetch_object($q1);
+	if(!empty($object) && !empty($object->num) && $object->num >= 4)
+		die('Cannot upload > 4 images! Delete some first.');
 
     $query = mysqli_query($conn, "INSERT INTO images (user_email, data, thumbnail) 
                                       VALUES ('$user', '$image', '$thumb')");
