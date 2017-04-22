@@ -9,6 +9,7 @@
 
 define("BASE_SITE", "http://note-to-myself.pricechecker.pro");
 
+
 $db_conn = mysqli_connect('localhost', 'notetomyself', '1234') or
 die(mysqli_connect_error());
 
@@ -111,4 +112,14 @@ function getConfirmHash($user) {
 
     return @$assoc['tmp_hash'];
 }
+
+
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_only_cookies', 1);
+
+session_start();
+if (isset($_SESSION['TIME']) && (time() - $_SESSION['TIME']) > 20 * 60 * 1000)
+	header('Location: logout.php');
+
+$_SESSION['TIME'] = time();
 

@@ -48,6 +48,8 @@ Thank you for registering.<br>
     <span style=\"color:red;\">Alternatively, you can finish signing up <a href=\"$confirmLink\">now</a>.");
 }
 
+session_regenerate_id();
+
 header('Location: notes.php');
 exit;
 
