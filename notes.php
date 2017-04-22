@@ -123,9 +123,9 @@ function createThumb($img) {
     switch($upperExt) {
         case 'JPEG' :
         case 'JPG'  : $im = imagecreatefromjpeg($img); break;
-        case 'PNG'  : $im = imagecreatefrompng($img); break;
+		//  case 'PNG'  : $im = imagecreatefrompng($img); break;
         case 'GIF'  : $im = imagecreatefromgif($img); break;
-        default : die("unknown type: $ext");
+        default : die("Only jpg and gif files are supported. <a href=\"notes.php\">Try again</a>.");
     }
 
     // get x & y dimensions
